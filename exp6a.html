@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Budget Calculator App</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      /* Gradient background */
+      background: linear-gradient(135deg, #89f7fe, #66a6ff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+      text-align: center;
+      width: 500px;
+    }
+    h2 {
+      color: #2b3ca1;
+    }
+    input[type="number"] {
+      width: 80%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 16px;
+    }
+    .percentages input {
+      width: 60px;
+      margin: 10px;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+    button {
+      background-color: #4154f1;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 15px;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #2937a8;
+    }
+    .result {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 25px;
+      flex-wrap: wrap;
+    }
+    .card {
+      background-color: #f3f5ff;
+      padding: 10px;
+      border-radius: 10px;
+      width: 100px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin: 5px;
+    }
+    .room { color: #f44336; }
+    .accessories { color: #4caf50; }
+    .emergency { color: #ff9800; }
+    .saving { color: #2196f3; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Budget Calculator App</h2>
+    <p><b>Enter Amount to Manage</b></p>
+    <input type="number" id="amount" placeholder="Enter total amount"><br>
+
+    <p><b>How would you like to divide your money?</b></p>
+    <div class="percentages">
+      Room Rent(%) <input type="number" id="room" value="10">
+      Accessories(%) <input type="number" id="accessories" value="40"><br>
+      Emergency(%) <input type="number" id="emergency" value="20">
+      Saving(%) <input type="number" id="saving" value="30">
+    </div>
+
+    <button id="calculate">Evaluate My Money</button>
+
+    <div class="result">
+      <div class="card room"><b>Room Rent</b><br>Rs.<span id="roomVal">0.00</span></div>
+      <div class="card accessories"><b>Accessories</b><br>Rs.<span id="accVal">0.00</span></div>
+      <div class="card emergency"><b>Emergency</b><br>Rs.<span id="emeVal">0.00</span></div>
+      <div class="card saving"><b>Saving</b><br>Rs.<span id="savVal">0.00</span></div>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+      $("#calculate").click(function() {
+        var amount = parseFloat($("#amount").val());
+        var room = parseFloat($("#room").val());
+        var accessories = parseFloat($("#accessories").val());
+        var emergency = parseFloat($("#emergency").val());
+        var saving = parseFloat($("#saving").val());
+
+        if (isNaN(amount) || amount <= 0) {
+          alert("Please enter a valid total amount.");
+          return;
+        }
+
+        var totalPercent = room + accessories + emergency + saving;
+        if (totalPercent !== 100) {
+          alert("The total of all percentages must be exactly 100%.");
+          return;
+        }
+
+        var roomVal = (amount * room) / 100;
+        var accVal = (amount * accessories) / 100;
+        var emeVal = (amount * emergency) / 100;
+        var savVal = (amount * saving) / 100;
+
+        $("#roomVal").text(roomVal.toFixed(2));
+        $("#accVal").text(accVal.toFixed(2));
+        $("#emeVal").text(emeVal.toFixed(2));
+        $("#savVal").text(savVal.toFixed(2));
+      });
+    });
+  </script>
+</body>
+</html>
